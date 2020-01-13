@@ -94,6 +94,9 @@
             (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
 (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
 
+;;sp-convolute-sexp
+(custom-set-variables
+ '(sp-override-key-bindings (quote (("M-?")))))
 
 ;;MAGIT
 (global-set-key (kbd "C-x g") 'magit-status)
