@@ -133,6 +133,12 @@
      "Window '%s' is normal")
    (current-buffer)))
 
+;; my RTX2080ti machine:
+;; /ssh:batuhan@25.22.217.63:/home/batuhan
+
+(defun connect-remote ()
+  (interactive)
+  (dired "/ssh:batuhan@25.22.217.63:/home/batuhan"))
 
 
 ;; ;;AUCTEX
