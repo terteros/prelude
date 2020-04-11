@@ -35,9 +35,8 @@
 ;; --------------------------------------
 
 (setq inhibit-startup-message t) ;; hide the startup message
-(load-theme 'solarized-dark t)
-;(load-theme 'spacemacs-theme t)
-;(load-theme 'spacemacs-dark t)
+;(load-theme 'solarized-dark t)
+(load-theme 'spacemacs-dark t)
 (require 'spaceline-config)
 (spaceline-emacs-theme)
 
@@ -62,7 +61,7 @@
 (setenv "WORKON_HOME" "/home/batuhan/anaconda3/envs")
 ;(setq elpy-rpc-python-command "/home/batuhan/anaconda3/bin/python")
 (pyvenv-mode 1)
-(pyvenv-activate "/home/batuhan/anaconda3/envs/bmenv")
+(pyvenv-activate "/home/batuhan/anaconda3/envs/hmr-pytorch")
 
 (elpy-enable)
 
@@ -139,8 +138,14 @@
 
 (defun connect-remote ()
   (interactive)
-  (dired "/ssh:batuhan@25.22.217.63:/home/batuhan"))
-
+  (dired "/ssh:batuhan@25.22.217.63:/home/batuhan/Source"))
+(defun open-my-config ()
+  "Open my-config.el"
+  (interactive)
+  (find-file "/home/batuhan/.emacs.d/personal/my-config.el"))
+(defun reload-init ()
+  (interactive)
+  (load-file user-init-file))
 
 ;; ;;AUCTEX
 ;; (setq TeX-auto-save t)
@@ -185,4 +190,5 @@
           (lambda ()
             (dired-hide-details-mode)
             (dired-sort-toggle-or-edit)))
+(setq dired-listing-switches "-alh")
 ;; init.el ends here
