@@ -23,6 +23,7 @@
     spaceline
     py-autopep8
     neotree
+    all-the-icons
     ))
 
 (mapc #'(lambda (package)
@@ -83,8 +84,8 @@
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; enable autopep8 formatting on save
-(require 'py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+;; (require 'py-autopep8)
+;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 ;; use rgrep when elpy-goto-definition fails
 (defun elpy-goto-definition-or-rgrep ()
@@ -162,5 +163,26 @@
 
 ;;NEOTREE
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+(require 'all-the-icons)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(defun neotree-project-dir ()
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+        (file-name (buffer-file-name)))
+    (neotree-toggle)
+    (if project-dir
+        (if (neo-global--window-exists-p)
+            (progn
+              (neotree-dir project-dir)
+              (neotree-find file-name)))
+      (message "Could not find git project root."))))
+(global-set-key [f8] 'neotree-project-dir)
+
+
+;;DIRED
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (dired-hide-details-mode)
+            (dired-sort-toggle-or-edit)))
 ;; init.el ends here
