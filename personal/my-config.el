@@ -190,5 +190,5 @@
           (lambda ()
             (dired-hide-details-mode)
             (dired-sort-toggle-or-edit)))
-(setq dired-listing-switches "-alh")
+;(setq dired-listing-switches "-lh --group-directories-first")
 ;; init.el ends here
