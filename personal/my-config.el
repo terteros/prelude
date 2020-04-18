@@ -135,10 +135,13 @@
 
 ;; my RTX2080ti machine:
 ;; /ssh:batuhan@25.22.217.63:/home/batuhan
-
 (defun connect-remote ()
   (interactive)
   (dired "/ssh:batuhan@25.22.217.63:/home/batuhan/Source"))
+;; dl3: ssh batuhan@144.122.71.14 -p 8085
+(defun connect-dl3 ()
+  (interactive)
+  (dired "/ssh:batuhan@144.122.71.14#8085:"))
 (defun open-my-config ()
   "Open my-config.el"
   (interactive)
