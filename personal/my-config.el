@@ -14,7 +14,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar myPackages
+(defvar my-packages
   '(ein
     elpy
     flycheck
@@ -29,7 +29,7 @@
 (mapc #'(lambda (package)
     (unless (package-installed-p package)
       (package-install package)))
-      myPackages)
+      my-packages)
 
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
@@ -53,6 +53,7 @@
  '(add-to-list 'savehist-additional-variables 'command-history))
 (savehist-mode 1)
 (global-undo-tree-mode -1)
+
 
 ;; PYTHON CONFIGURATION
 ;; --------------------------------------
@@ -90,20 +91,20 @@
 (defun elpy-goto-definition-or-rgrep ()
   "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
   (interactive)
-  (ring-insert find-tag-marker-ring (point-marker))
+  (xref-push-marker-stack)
   (condition-case nil (elpy-goto-definition)
     (error (elpy-rgrep-symbol
             (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
 (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
 
 ;; use rgrep when xref-find-references fails
-(defun xref-find-references-or-rgrep ()
-  "xref-find-references for the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
-  (interactive)
-  (ring-insert find-tag-marker-ring (point-marker))
-  (condition-case nil (xref-find-references)
-    (error (elpy-rgrep-symbol
-            (thing-at-point 'symbol)))))
+;; (defun xref-find-references-or-rgrep ()
+;;   "xref-find-references for the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
+;;   (interactive)
+;;   (xref-push-marker-stack)
+;;   (condition-case nil (xref-find-references)
+;;     (error (elpy-rgrep-symbol
+;;             (thing-at-point 'symbol)))))
 ;;(define-key elpy-mode-map (kbd "M-?") 'xref-find-references-or-rgrep)
 
 
@@ -121,6 +122,8 @@
 (global-set-key [XF86Launch7] 'uncomment-region)
 (global-set-key [XF86Launch8] 'projectile-find-file)
 
+
+;;MY COOL SCRIPTS
 ;; Toggle window dedication
 (defun toggle-window-dedicated ()
   "Toggle whether the current active window is dedicated or not"
@@ -139,9 +142,30 @@
   (interactive)
   (dired "/ssh:batuhan@25.22.217.63:/home/batuhan/Source"))
 ;; dl3: ssh batuhan@144.122.71.14 -p 8085
-(defun connect-dl3 ()
+(defun dl3-dired ()
   (interactive)
-  (dired "/ssh:batuhan@144.122.71.14#8085:"))
+  (dired "/ssh:batuhan@144.122.71.14#8085:/home/batuhan/Source/hmr-pytorch"))
+(defun dl3-setup ()
+  (interactive)
+  (dired "/ssh:batuhan@144.122.71.14#8085:/home/batuhan/Source/hmr-pytorch")
+  (shell)
+  (set-buffer (get-buffer "*shell*"))
+  (rename-buffer "Tensorboard")
+  (insert "conda activate epismpl")
+  (comint-send-input)
+  (comint-send-input)
+  (insert "tensorboard --logdir results/dev")
+  (comint-send-input)
+  (comint-send-input)
+  (split-window-below)
+  (shell)
+  (set-buffer (get-buffer "*shell*"))
+  (insert "conda activate epismpl")
+  (comint-send-input)
+  (async-shell-command "tail -f slurm.out")
+  (counsel-find-file "configs/hmr_config.yaml")
+  )
+
 (defun open-my-config ()
   "Open my-config.el"
   (interactive)
