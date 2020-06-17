@@ -166,6 +166,11 @@
   (counsel-find-file "configs/hmr_config.yaml")
   )
 
+(defun connect-noisy-cricket ()
+  (interactive)
+  (dired "/ssh:batuhan@10.60.0.20:/home/batuhan/Source"))
+
+
 (defun open-my-config ()
   "Open my-config.el"
   (interactive)
@@ -216,6 +221,7 @@
 (add-hook 'dired-mode-hook
           (lambda ()
             (dired-hide-details-mode)
-            (dired-sort-toggle-or-edit)))
-;(setq dired-listing-switches "-lh --group-directories-first")
+            ;; (dired-sort-toggle-or-edit)
+            ))
+(setq dired-listing-switches "-alh --group-directories-first")
 ;; init.el ends here
