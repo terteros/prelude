@@ -224,4 +224,20 @@
             ;; (dired-sort-toggle-or-edit)
             ))
 (setq dired-listing-switches "-alh --group-directories-first")
+
+
+
+;;TRAMP TRICKS
+;;THIS IS FROM https://emacs.stackexchange.com/questions/17543/tramp-mode-is-much-slower-than-using-terminal-to-ssh
+(setq projectile-mode-line "Projectile")
+;; (setq tramp-ssh-controlmaster-options "")
+;; (setq tramp-verbose 6)
+(setq remote-file-name-inhibit-cache nil)
+(setq tramp-completion-reread-directory-timeout nil)
+(setq vc-ignore-dir-regexp
+      (format "\\(%s\\)\\|\\(%s\\)"
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp))
+
+
 ;; init.el ends here
